@@ -10,6 +10,7 @@ Designed to be demo-friendly: it uses MySQL as the primary database and automati
 - Filter by title, genre, developer, platform, and year.
 - Play games in-page via embedded URLs.
 - Fullscreen support for gameplay iframe.
+- TinyURL-safe gameplay launch via local `play.php` redirect endpoint.
 - Dual search UIs:
   - `index.php` (styled "Arcade Vault" experience)
   - `search.php` (simple utility search page)
@@ -26,6 +27,7 @@ Designed to be demo-friendly: it uses MySQL as the primary database and automati
 
 - `index.php` - main UI and game cards
 - `search.php` - alternate search/filter page
+- `play.php` - resolves game launch URL and redirects for iframe compatibility
 - `db.php` - DB connection + fallback logic + SQLite bootstrap
 - `arcade_schema.sql` - MySQL schema and full seed data
 - `arcade_catalog.sqlite` - local fallback database file (auto-created/used)
@@ -49,7 +51,7 @@ Open:
 - <http://127.0.0.1:8000/>
 - <http://127.0.0.1:8000/search.php>
 
-If MySQL is down, the app will still run using SQLite fallback data.
+If MySQL is down, the app will still run using SQLite fallback data seeded from `arcade_schema.sql`.
 
 ## Run with MySQL (Primary Mode)
 
@@ -101,6 +103,7 @@ Expected result: HTTP `200` for both endpoints.
 ## Architecture Notes
 
 - `db.php` initializes a single PDO connection.
+- `play.php` prevents TinyURL iframe issues by redirecting to final game URLs.
 - Query filtering is built dynamically using condition arrays and bound parameters.
 - Data model is normalized:
   - `games` references `genres`, `platforms`, and `developers`.
@@ -116,7 +119,7 @@ Expected result: HTTP `200` for both endpoints.
 
 - No authentication/user session flow yet.
 - No automated test suite yet (manual smoke checks documented above).
-- Limited fallback seed data in SQLite compared to full MySQL seed set.
+- Local SQLite fallback can differ slightly from MySQL if SQL dialect handling changes.
 - Potential improvements:
   - Add pagination and DB indexing for scale.
   - Add integration tests for filtering behavior.
