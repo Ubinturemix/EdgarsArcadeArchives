@@ -230,7 +230,7 @@
   $stmt2 = $pdo->query("SELECT id, embed_url FROM games");
   while ($row = $stmt2->fetch()):
 ?>
-    <?= $row['id'] ?>: "<?= $row['embed_url'] ?>",
+    <?= $row['id'] ?>: "<?= "play.php?id=" . (int) $row['id'] ?>",
 <?php endwhile; ?>
   };
 

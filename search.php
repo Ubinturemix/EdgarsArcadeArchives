@@ -116,7 +116,7 @@ while ($game = $stmt->fetch()):
       Developer: <?= htmlspecialchars($game['developer']) ?> |
       Platform: <?= htmlspecialchars($game['platform']) ?>
     </p>
-    <iframe src="<?= htmlspecialchars($game['embed_url']) ?>" width="100%" height="400" allowfullscreen></iframe>
+    <iframe src="<?= "play.php?id=" . (int) $game['id'] ?>" width="100%" height="400" allowfullscreen></iframe>
   </div>
 <?php endwhile; ?>
 
